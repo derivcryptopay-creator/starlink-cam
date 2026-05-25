@@ -1,0 +1,24 @@
+{
+  "name": "starlink2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaach12345z-lab/STARLINK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/isaach12345z-lab/STARLINK/issues"
+  },
+  "homepage": "https://github.com/isaach12345z-lab/STARLINK#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

